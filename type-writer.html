@@ -125,6 +125,12 @@ Polymer({
     '_observeText(text, delay)'
   ],
 
+  attached: function() {
+    if(!this.delay && this.delay !==0) {
+      this.delay = 0;
+    }
+  },
+
   _observeText: function(text, delay) {
     if (this.$.text.textContent) {
       this._oldText = this.$.text.textContent;
