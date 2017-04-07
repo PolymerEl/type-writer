@@ -1,38 +1,20 @@
 # \<type-writer\>
 
-element with type-writer effect
+display text content with type-writer effect
 
-## Install the Polymer-CLI
+Example Usage:
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
-
-## Viewing Your Application
+<!--
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="type-writer.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<type-writer text="this text is being writter with a type-writer effect" speed="80" cursor-duration="3000"></type-writer>
 
 ```
-$ polymer serve
-```
-
-## Building Your Application
-
-```
-$ polymer build
-```
-
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.

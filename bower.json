@@ -1,7 +1,8 @@
 {
   "name": "type-writer",
-  "description": "element with type-writer effect",
+  "description": "display text content with type-writer effect",
   "main": "type-writer.html",
+  "version": "0.1.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0"
   },
