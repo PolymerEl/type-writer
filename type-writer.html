@@ -1,0 +1,162 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`type-writer`
+element with type-writer effect
+
+@demo demo/index.html 
+-->
+
+<dom-module id="type-writer">
+  <template>
+    <style>
+      :host {
+        display: inline;
+      }
+      @keyframes flickerAnimation {
+        0%   { opacity:1; }
+        50%  { opacity:0; }
+        100% { opacity:1; }
+      }
+      @-o-keyframes flickerAnimation {
+        0%   { opacity:1; }
+        50%  { opacity:0; }
+        100% { opacity:1; }
+      }
+      @-moz-keyframes flickerAnimation {
+        0%   { opacity:1; }
+        50%  { opacity:0; }
+        100% { opacity:1; }
+      }
+      @-webkit-keyframes flickerAnimation {
+        0%   { opacity:1; }
+        50%  { opacity:0; }
+        100% { opacity:1; }
+      }
+
+      #cursor {
+        display: none;
+        opacity: 0;
+      }
+      
+      :host[typing] #cursor {
+         display: inline;
+      -webkit-animation: flickerAnimation 1s infinite;
+      -moz-animation: flickerAnimation 1s infinite;
+      -o-animation: flickerAnimation 1s infinite;
+      animation: flickerAnimation 1s infinite;
+    }
+
+    </style>
+    <span id="text"></span><span id="cursor">|</span>
+  </template>
+
+<script>
+Polymer({
+
+  is: 'type-writer',
+
+  properties: {
+    /* 
+     * `delay` delay after which we shall start the typing effect  
+     */
+    delay: {
+      type: Number
+      // value: 1000
+    },
+
+    /* 
+     * `cursorDuration` the duraton for which the cursor will stay visible after the end the animation
+     */
+    cursorDuration: {
+      type: Number,
+      value: 0
+    },
+
+    /* 
+     * `text`  the text to type
+     */
+    text: {
+      type: String
+      // observer: '_observeText'
+    },
+
+    /* 
+     * `speed` the average speed for writing a character
+     */
+    speed: {
+      type: Number,
+      value: 150
+    },
+
+    /* 
+     * `eraseSpeed` the average speed for writing a character
+     */
+    eraseSpeed: {
+      type: Number
+      // value: 150
+    },
+
+    /* 
+     * `typing` will be readonly when typing. When true, the cursor is visible.  
+     */
+    typing: {
+      type: Boolean,
+      readOnly: true,
+      value: false,
+      notify: true,
+      reflectToAttribute: true
+    },
+
+    _length: {
+      type: Number,
+      value: 0
+    },
+
+    /* 
+     * `_oldText` the previous text
+     */
+     _oldText : {
+       type:  String
+       }
+  },
+
+  observers: [
+    '_observeText(text, delay)'
+  ],
+
+  _observeText: function(text, delay) {
+    if (this.$.text.textContent) {
+      this._oldText = this.$.text.textContent;
+      if (this.typing && this._cancel) {
+        this._cancel();
+      }
+      return this.erase();
+    }
+    this._length = 0;
+    this.async(this.type, this.delay);
+  },
+
+  type: function() {
+    this._setTyping(true);
+    this.$.text.textContent = this.text.substr(0, this._length++);
+    if (this._length < this.text.length + 1) {
+      return this._cancel = this.async(this.type, this.speed + (Math.random() - 0.5) * this.speed / 2);
+    }
+    this.async(function() {
+      this._setTyping(false);
+      this.fire('type-writer-end');
+    }, this.cursorDuration);
+  },
+  erase: function() {
+      this.$.text.textContent = this._oldText.substr(0, this._length--);
+      if (this._length > 0) {
+        return this._cancel = this.async(this.erase, this.eraseSpeed || this.speed);
+      }
+      this._cancel = this.async(this.type, this.delay);
+    }
+
+});
+</script>
+
+</dom-module>

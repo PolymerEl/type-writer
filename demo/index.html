@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>type-writer demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../type-writer.html">
+  <style is="custom-style" include="demo-pages-shared-styles">
+
+  </style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic type-writer demo</h3>
+    <demo-snippet>
+      <template>
+        <type-writer text="I am being written ..." cursor-duration="3000"></type-writer>
+      </template>
+    </demo-snippet>
+  </div>
+  <div class="vertical-section-container centered">
+    <h3>type-writer, with dom-repeat</h3>
+    <demo-snippet>
+      <template>
+        <template id="app" is="dom-bind">
+          <template is="dom-repeat" items="{{texts}}">
+            <type-writer speed = "80" cursor-duration= "240" text="[[item]]" delay="[[repeatDelay(index)]]"></type-writer>
+          </template>
+        </template>
+      </template>
+    </demo-snippet>
+  </div>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+
+    app = document.querySelector('#app');
+
+    texts = ['hello, ', 'I am trying ', 'to test ', 'type-writer'];
+    app.repeatDelay = function(index) {
+      var chars = texts.filter((t,i) => {return i < index;}).reduce((s,t) => {return t.length + s }, 0);
+      var delay =  chars * 150 + index*250;
+      
+      console.info(index, delay);
+      return delay;
+
+    }
+
+    app.texts = texts;
+    app.async(()=>{app.set('texts.1','I am succeeding ')}, 7000);
+    app.async(() =>{app.push('texts','!')}, 8000);
+
+  });
+  </script>
+</body>
+
+</html>
