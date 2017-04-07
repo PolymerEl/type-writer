@@ -17,6 +17,6 @@ Example Usage:
 ```
 -->
 ```html
-<type-writer text="this text is being writter with a type-writer effect" speed="80" cursor-duration="3000"></type-writer>
+<type-writer delay="200" text="this text is being written with a type-writer effect!" speed="80" cursor-duration="3000"></type-writer>
 
 ```

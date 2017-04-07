@@ -154,13 +154,14 @@ Polymer({
       this.fire('type-writer-end');
     }, this.cursorDuration);
   },
+
   erase: function() {
-      this.$.text.textContent = this._oldText.substr(0, this._length--);
-      if (this._length > 0) {
-        return this._cancel = this.async(this.erase, this.eraseSpeed || this.speed);
-      }
-      this._cancel = this.async(this.type, this.delay);
+    this.$.text.textContent = this._oldText.substr(0, this._length--);
+    if (this._length > 0) {
+      return this._cancel = this.async(this.erase, this.eraseSpeed || this.speed);
     }
+    this._cancel = this.async(this.type, this.delay);
+  } 
 
 });
 </script>
