@@ -140,6 +140,9 @@ Polymer({
       return this.erase();
     }
     this._length = 0;
+    // if(this._oldText) {
+    //   this._setTyping(true);
+    // }
     this.async(this.type, this.delay);
   },
 
@@ -151,16 +154,18 @@ Polymer({
     }
     this.async(function() {
       this._setTyping(false);
-      this.fire('type-writer-end');
+      this.fire('type-writer-end', this.text);
     }, this.cursorDuration);
   },
 
   erase: function() {
+    this._setTyping(true);
     this.$.text.textContent = this._oldText.substr(0, this._length--);
-    if (this._length > 0) {
+    if (this._length >= 0) {
       return this._cancel = this.async(this.erase, this.eraseSpeed || this.speed);
     }
-    this._cancel = this.async(this.type, this.delay);
+    this.type();
+    // this._cancel = this.async(this.type, this.delay);
   } 
 
 });

@@ -2,7 +2,7 @@
   "name": "type-writer",
   "description": "display text content with type-writer effect",
   "main": "type-writer.html",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0"
   },
