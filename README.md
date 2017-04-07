@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/polymerEl/type-writer)
+
 # \<type-writer\>
 
 display text content with type-writer effect
